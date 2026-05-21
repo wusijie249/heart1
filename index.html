@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💗 跳动的爱心</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&display=swap');
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: #0a0008;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+overflow: hidden;
+font-family: ‘Noto Serif SC’, serif;
+}
+
+/* Ambient background glow */
+body::before {
+content: ‘’;
+position: fixed;
+width: 600px;
+height: 600px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(180, 0, 60, 0.15) 0%, transparent 70%);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+animation: ambientPulse 1.2s ease-in-out infinite;
+pointer-events: none;
+}
+
+@keyframes ambientPulse {
+0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+.scene {
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 40px;
+}
+
+/* Floating particles */
+.particles {
+position: fixed;
+inset: 0;
+pointer-events: none;
+overflow: hidden;
+}
+
+.particle {
+position: absolute;
+width: 4px;
+height: 4px;
+border-radius: 50%;
+background: rgba(255, 80, 120, 0.6);
+animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+10%  { opacity: 1; }
+90%  { opacity: 0.5; }
+100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+}
+
+/* SVG Heart */
+.heart-wrapper {
+position: relative;
+width: 240px;
+height: 240px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.heart-svg {
+width: 200px;
+height: 200px;
+animation: heartbeat 1.2s ease-in-out infinite;
+filter: drop-shadow(0 0 20px rgba(255, 40, 90, 0.8))
+drop-shadow(0 0 60px rgba(255, 40, 90, 0.4));
+}
+
+@keyframes heartbeat {
+0%   { transform: scale(1); }
+14%  { transform: scale(1.18); }
+28%  { transform: scale(1); }
+42%  { transform: scale(1.12); }
+56%  { transform: scale(1); }
+100% { transform: scale(1); }
+}
+
+.heart-path {
+fill: url(#heartGradient);
+animation: colorShift 3s ease-in-out infinite alternate;
+}
+
+@keyframes colorShift {
+0%   { filter: hue-rotate(0deg); }
+100% { filter: hue-rotate(20deg); }
+}
+
+/* Ripple rings */
+.ripple {
+position: absolute;
+border: 2px solid rgba(255, 80, 120, 0.4);
+border-radius: 50%;
+width: 160px;
+height: 160px;
+animation: rippleOut 1.2s ease-out infinite;
+}
+.ripple:nth-child(2) { animation-delay: 0.4s; }
+.ripple:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes rippleOut {
+0%   { transform: scale(0.8); opacity: 0.8; }
+100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Text */
+.label {
+color: rgba(255, 160, 180, 0.85);
+font-size: 1.1rem;
+letter-spacing: 0.3em;
+font-weight: 300;
+text-shadow: 0 0 20px rgba(255, 80, 120, 0.6);
+animation: labelPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes labelPulse {
+0%, 100% { opacity: 0.7; }
+50%       { opacity: 1; }
+}
+
+/* EKG line at bottom */
+.ekg-container {
+width: 280px;
+height: 50px;
+overflow: hidden;
+position: relative;
+opacity: 0.6;
+}
+
+.ekg-svg {
+position: absolute;
+left: 0;
+animation: ekgScroll 2.4s linear infinite;
+}
+
+@keyframes ekgScroll {
+from { transform: translateX(0); }
+to   { transform: translateX(-280px); }
+}
+
+.ekg-path {
+fill: none;
+stroke: rgba(255, 100, 140, 0.9);
+stroke-width: 2;
+stroke-linecap: round;
+stroke-linejoin: round;
+filter: drop-shadow(0 0 4px rgba(255, 80, 120, 0.8));
+}
+</style>
+
+</head>
+<body>
+
+<!-- Floating particles -->
+
+<div class="particles" id="particles"></div>
+
+<div class="scene">
+  <div class="heart-wrapper">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+
+```
+<svg class="heart-svg" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#ff3366"/>
+      <stop offset="50%"  stop-color="#ff0044"/>
+      <stop offset="100%" stop-color="#cc0033"/>
+    </linearGradient>
+    <linearGradient id="shineGradient" x1="20%" y1="10%" x2="60%" y2="50%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+  <!-- Heart shape -->
+  <path class="heart-path"
+    d="M50 85 C50 85 5 55 5 28
+       C5 15 15 5 28 5
+       C36 5 43 9 50 17
+       C57 9 64 5 72 5
+       C85 5 95 15 95 28
+       C95 55 50 85 50 85 Z"/>
+  <!-- Shine overlay -->
+  <path
+    d="M28 12 C22 16 18 22 18 30 C18 32 19 34 20 36 C16 30 15 24 18 18 C21 12 25 9 28 12Z"
+    fill="url(#shineGradient)"/>
+</svg>
+```
+
+  </div>
+
+  <div class="label">❤ 心跳不止 ❤</div>
+
+  <!-- EKG line -->
+
+  <div class="ekg-container">
+    <svg class="ekg-svg" width="560" height="50" viewBox="0 0 560 50">
+      <!-- Two repeating EKG cycles -->
+      <path class="ekg-path"
+        d="M0,25 L30,25 L38,25 L42,10 L46,40 L54,5 L60,45 L66,25 L72,25
+           L110,25 L118,25 L122,10 L126,40 L134,5 L140,45 L146,25 L152,25
+           L190,25 L198,25 L202,10 L206,40 L214,5 L220,45 L226,25 L232,25
+           L270,25 L278,25 L282,10 L286,40 L294,5 L300,45 L306,25 L312,25
+           L350,25 L358,25 L362,10 L366,40 L374,5 L380,45 L386,25 L392,25
+           L430,25 L438,25 L442,10 L446,40 L454,5 L460,45 L466,25 L472,25
+           L560,25"/>
+    </svg>
+  </div>
+</div>
+
+<script>
+  // Generate floating particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    p.style.animationDuration = (4 + Math.random() * 6) + 's';
+    p.style.animationDelay = (Math.random() * 6) + 's';
+    p.style.opacity = 0.3 + Math.random() * 0.7;
+    container.appendChild(p);
+  }
+</script>
+
+</body>
+</html>
